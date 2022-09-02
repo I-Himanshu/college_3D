@@ -1,130 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-    
+    <!-- <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script> -->
 
+    <script
+      type="module"
+      src="https://unpkg.com/@google/model-viewer/dist/model-viewer.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/@google/model-viewer/dist/model-viewer-legacy.js"
+    ></script>
     <style>
-        This keeps child nodes hidden while the element loads
-        :not(:defined)>* {
-            display: none;
+      This keeps child nodes hidden while the element loads :not(:defined) > * {
+        display: none;
+      }
+
+      model-viewer {
+        background-color: #eee;
+        overflow-x: hidden;
+        height: 80vh;
+        width: 100%;
+      }
+
+      #ar-button {
+        background-color: green;
+        /* background-image: url(../../assets/ic_view_in_ar_new_googblue_48dp.webp); */
+        background-repeat: no-repeat;
+        background-size: 20px 20px;
+        background-position: 12px 50%;
+        /* background-color: #fff; */
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        white-space: nowrap;
+        bottom: 132px;
+        padding: 0px 16px 0px 40px;
+        font-family: Roboto Regular, Helvetica Neue, sans-serif;
+        font-size: 14px;
+        color: #4285f4;
+        height: 36px;
+        line-height: 36px;
+        border-radius: 18px;
+        border: 1px solid #dadce0;
+      }
+
+      #ar-button:active {
+        background-color: #e8eaed;
+      }
+
+      #ar-button:focus {
+        outline: none;
+      }
+
+      #ar-button:focus-visible {
+        outline: 1px solid #4285f4;
+      }
+
+      @keyframes circle {
+        from {
+          transform: translateX(-50%) rotate(0deg) translateX(50px) rotate(0deg);
         }
-    
-        model-viewer {
-            background-color: #eee;
-            overflow-x: hidden;
-            height: 80vh;
-            width: 100%;
+
+        to {
+          transform: translateX(-50%) rotate(360deg) translateX(50px)
+            rotate(-360deg);
         }
-    
-        #ar-button {
-            background-color: green;
-            /* background-image: url(../../assets/ic_view_in_ar_new_googblue_48dp.webp); */
-            background-repeat: no-repeat;
-            background-size: 20px 20px;
-            background-position: 12px 50%;
-            /* background-color: #fff; */
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            white-space: nowrap;
-            bottom: 132px;
-            padding: 0px 16px 0px 40px;
-            font-family: Roboto Regular, Helvetica Neue, sans-serif;
-            font-size: 14px;
-            color: #4285f4;
-            height: 36px;
-            line-height: 36px;
-            border-radius: 18px;
-            border: 1px solid #DADCE0;
+      }
+
+      @keyframes elongate {
+        from {
+          transform: translateX(100px);
         }
-    
-        #ar-button:active {
-            background-color: #E8EAED;
+
+        to {
+          transform: translateX(-100px);
         }
-    
-        #ar-button:focus {
-            outline: none;
-        }
-    
-        #ar-button:focus-visible {
-            outline: 1px solid #4285f4;
-        }
-    
-        @keyframes circle {
-            from {
-                transform: translateX(-50%) rotate(0deg) translateX(50px) rotate(0deg);
-            }
-    
-            to {
-                transform: translateX(-50%) rotate(360deg) translateX(50px) rotate(-360deg);
-            }
-        }
-    
-        @keyframes elongate {
-            from {
-                transform: translateX(100px);
-            }
-    
-            to {
-                transform: translateX(-100px);
-            }
-        }
-    
-        model-viewer>#ar-prompt {
-            position: absolute;
-            left: 50%;
-            bottom: 175px;
-            animation: elongate 2s infinite ease-in-out alternate;
-            display: none;
-        }
-    
-        model-viewer[ar-status="session-started"]>#ar-prompt {
-            display: block;
-        }
-    
-        model-viewer>#ar-prompt>img {
-            animation: circle 4s linear infinite;
-        }
-    
-        model-viewer>#ar-failure {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            bottom: 175px;
-            display: none;
-        }
-    
-        model-viewer[ar-tracking="not-tracking"]>#ar-failure {
-            display: block;
-        }
-     
-       
+      }
+
+      model-viewer > #ar-prompt {
+        position: absolute;
+        left: 50%;
+        bottom: 175px;
+        animation: elongate 2s infinite ease-in-out alternate;
+        display: none;
+      }
+
+      model-viewer[ar-status="session-started"] > #ar-prompt {
+        display: block;
+      }
+
+      model-viewer > #ar-prompt > img {
+        animation: circle 4s linear infinite;
+      }
+
+      model-viewer > #ar-failure {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 175px;
+        display: none;
+      }
+
+      model-viewer[ar-tracking="not-tracking"] > #ar-failure {
+        display: block;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div>
-<model-viewer src="./clg.glb" poster="../../assets/ShopifyModels/Chair.webp"
-    shadow-intensity="1" ar ar-modes="webxr scene-viewer quick-look" camera-controls touch-action="pan-y"
-    alt="A 3D model carousel">
+      <!-- <model-viewer src="./Tree.glb" poster="../../assets/ShopifyModels/Chair.webp" shadow-intensity="1" ar
+    ar-modes="webxr scene-viewer quick-look" camera-controls touch-action="pan-y" alt="A 3D model carousel">
+     -->
+      <model-viewer
+        src="./Tree.glb"
+        alt="JorasankoDoubleSofa"
+        auto-rotate
+        poster
+        preload
+        ar
+        camera-controls
+        background-color="#455A64"
+        shadow-intensity="1"
+        shadow-softness="1"
+        style="width: 500px; height: 500px"
+        ;
+      >
+        <button slot="ar-button" id="ar-button">View in your space</button>
 
-    <button slot="ar-button" id="ar-button">
-        View in your space
-    </button>
+        <div id="ar-prompt">this is here</div>
 
-    <div id="ar-prompt">
-        this is here
-    </div>
+        <button id="ar-failure">AR is not tracking!</button>
 
-    <button id="ar-failure">
-        AR is not tracking!
-    </button>
-
-    <!--<div class="slider">
+        <!--<div class="slider">
          <div class="slides">
             <button class="slide selected" onclick="switchSrc(this, 'Chair')"
                 style="background-image: url('../../assets/ShopifyModels/Chair.webp');">
@@ -143,28 +155,27 @@
             </button>
         </div> 
     </div>-->
-</model-viewer>
-</div>
+      </model-viewer>
+    </div>
 
+    <script type="module">
+      const modelViewer = document.querySelector("model-viewer");
 
-<script type="module">
-    const modelViewer = document.querySelector("model-viewer");
-
-    window.switchSrc = (element, name) => {
+      window.switchSrc = (element, name) => {
         const base = "../../assets/ShopifyModels/" + name;
-        modelViewer.src = base + '.glb';
-        modelViewer.poster = base + '.webp';
+        modelViewer.src = base + ".glb";
+        modelViewer.poster = base + ".webp";
         const slides = document.querySelectorAll(".slide");
-        slides.forEach((element) => { element.classList.remove("selected"); });
+        slides.forEach((element) => {
+          element.classList.remove("selected");
+        });
         element.classList.add("selected");
-    };
+      };
 
-    // document.querySelector(".slider").addEventListener('beforexrselect', (ev) => {
-    //     // Keep slider interactions from affecting the XR scene.
-    //     ev.preventDefault();
-    // });
-</script>
-
-
-</body>
+      // document.querySelector(".slider").addEventListener('beforexrselect', (ev) => {
+      //     // Keep slider interactions from affecting the XR scene.
+      //     ev.preventDefault();
+      // });
+    </script>
+  </body>
 </html>
